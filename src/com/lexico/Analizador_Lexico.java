@@ -7,6 +7,7 @@ import com.lexico.procesos.Proceso1;
 import com.lexico.procesos.Proceso2;
 import com.lexico.procesos.Proceso20;
 import com.lexico.procesos.Proceso21;
+import com.lexico.procesos.Proceso22;
 import com.lexico.procesos.Proceso3;
 import com.lexico.procesos.Proceso4;
 import com.lexico.procesos.Proceso5;
@@ -45,7 +46,7 @@ public class Analizador_Lexico {
 	private Tabla_de_simbolos tbs;
 	
 	private void CrearMatriz(){
-		M = new Matriz(12,15);
+		M = new Matriz(13,16);
 		
 		//Creacion de Procesos
 		Proceso1 p1 = new Proceso1(this);
@@ -69,6 +70,7 @@ public class Analizador_Lexico {
 		Proceso19 p19 = new Proceso19(this);
 		Proceso20 p20 = new Proceso20(this);
 		Proceso21 p21 = new Proceso21(this);
+		Proceso22 p22 = new Proceso22(this);
 		
 		//Fila 0
 		M.setElemento(0, 0, new Par(1,p1));
@@ -84,8 +86,9 @@ public class Analizador_Lexico {
 		M.setElemento(0, 10, new Par(9,p1));
 		M.setElemento(0, 11, new Par(0,p10));
 		M.setElemento(0, 12, new Par(0,p19));
-		M.setElemento(0, 13, new Par(0,p18));
-		M.setElemento(0, 14, new Par(0,null));
+		M.setElemento(0, 13, new Par(12,null));
+		M.setElemento(0, 14, new Par(0,p18));
+		
 		
 		//Fila 1
 		M.setElemento(1, 0, new Par(1,p1));
@@ -273,6 +276,23 @@ public class Analizador_Lexico {
 		M.setElemento(11, 12, new Par(0,p15));
 		M.setElemento(11, 13, new Par(0,p15));
 		M.setElemento(11, 14, new Par(0,p15));
+		
+		//Fila 12
+		M.setElemento(12, 0, new Par(12,p1));
+		M.setElemento(12, 1, new Par(12,p1));
+		M.setElemento(12, 2, new Par(12,p1));
+		M.setElemento(12, 3, new Par(12,p1));
+		M.setElemento(12, 4, new Par(12,p1));
+		M.setElemento(12, 5, new Par(12,p1));
+		M.setElemento(12, 6, new Par(12,p1));
+		M.setElemento(12, 7, new Par(12,p1));
+		M.setElemento(12, 8, new Par(12,p1));
+		M.setElemento(12, 9, new Par(12,p1));
+		M.setElemento(12, 10, new Par(12,p1));
+		M.setElemento(12, 11, new Par(12,p1));
+		M.setElemento(12, 12, new Par(12,p1));
+		M.setElemento(12, 13, new Par(0,p22));
+		M.setElemento(12, 14, new Par(0,p1));
 	}
 	
 	private int getCol(char c){
@@ -302,8 +322,9 @@ public class Analizador_Lexico {
 			return 11;
 		if ( (c == ' ') || (c == '\t') )
 			return 12;
-		return 13; // caracter invalido
-		
+		if ( new String(""+c).indexOf("'") != -1   )
+			return 13;
+		return 14; // caracter invalido
 		//14 EOF (?) sino elimino un estado
 	}
 	

@@ -1,4 +1,6 @@
 carajo
+'mamadera'
+'123pasda'
 //
 asdadsasdasd
 		asdadad
@@ -8,6 +10,7 @@ xcvxvxcvxcv
 435435345 
 xcvxcvxvcxv
 //
+'leandro'
 +
 -
 *
@@ -23,6 +26,7 @@ xcvxcvxvcxv
 <>
 ==
 =
+'123aaa@pepe'
 @valor
 @a123
 val12
