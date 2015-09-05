@@ -19,7 +19,7 @@ public class Proceso19 extends Proceso{
 
 	@Override
 	public boolean ejecutar(Simbolo[] s, char c) {
-		s[0].setToken("Se encontra un blanco/tab en la linea " + anLex.getLinea());
+		//System.out.println("Se encontra un blanco/tab en la linea " + anLex.getLinea());
 		return false;
 	}
 

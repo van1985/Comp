@@ -48,7 +48,7 @@ public class Tabla_de_simbolos {
 	
 	public void add(String s, Simbolo simb){
 		this.tabladesimbolos.put(s, simb);
-		Object[] obj = {simb.getToken(),simb.getLexema()};
+		Object[] obj = {simb.getToken(),simb};
 		this.model.addRow(obj);
 	}
 	

@@ -9,6 +9,8 @@ import java.net.URL;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
+import com.sintactico.Parser;
+
 public class Main {
 
 	static String path="";
@@ -26,7 +28,7 @@ public class Main {
 		modelerror = new DefaultTableModel();
 		
 		URL location = Main.class.getProtectionDomain().getCodeSource().getLocation();
-		path = location.getFile()+"/test.txt"; 
+		path = location.getFile()+"/test-tp2.txt"; 
 		saveFile();
 		runAL();
 	}
@@ -58,10 +60,16 @@ public class Main {
 	
 	private static void runAL(){
 		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(jTextArea1.getText()), modelerror);
+		/*
 		Simbolo s;
 		while ((s = al.getToken()).getLexema() != "$") {
 			System.out.println(s.getToken()+ " "+ s.getLexema() + "\n");
 		}
+		*/
+		Parser parser = new Parser(al,model,true);
+		parser.run();
+		
+		
 	}
 
 }
