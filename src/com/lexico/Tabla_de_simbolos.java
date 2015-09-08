@@ -60,4 +60,12 @@ public class Tabla_de_simbolos {
 		return this.tabladesimbolos.containsKey(l);
 	}
 	
+	public DefaultTableModel getModelTbs(){
+		return model;
+	}
+	
+	public Hashtable<String, Simbolo> getTablaDeSimbolos(){
+		return tabladesimbolos;
+	}
+	
 }

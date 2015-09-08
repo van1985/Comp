@@ -24,7 +24,7 @@ public class Proceso4 extends Proceso{
 			int min = (int) Math.pow(-2,15);
 			int max = (int)Math.pow(2,15)-1;
 			if ((val>=min)&&(val<max)){
-				super.guardar(s, "Constante Entera del tipo _i");
+				super.guardar(s, "CTE_I");
 			}
 			else{
 				this.anLex.addError(this.anLex.getLinea(), "Constante entera fuera de rango: "+s[0].getLexema());

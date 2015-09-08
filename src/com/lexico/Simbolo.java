@@ -53,8 +53,8 @@ public class Simbolo implements ParserTokens{
 			return IF;
 		if (s.equals("else"))
 			return ELSE;
-		if (s.equals("for"))
-			return FOR;
+		if (s.equals("loop"))
+			return LOOP;
 		if (s.equals("print"))
 			return PRINT;
 		if (s.equals("int"))
@@ -63,10 +63,10 @@ public class Simbolo implements ParserTokens{
 			return DOUBLE;
 		if (s.equals("Constante Doble"))
 			return CTED;
-		if (s.equals("Constante Entera"))
+		if (s.equals("CTE_I"))
 			return CTEI;
 		if (s.equals("Cadena caracteres"))
-			return CADENA;
+			return CHAIN;
 		if (s.equals("Asignacion"))
 			return OP_ASIG;
 		if (s.equals("Identificador"))

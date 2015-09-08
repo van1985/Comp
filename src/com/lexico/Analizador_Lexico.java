@@ -39,6 +39,8 @@ public class Analizador_Lexico {
 	public Analizador_Lexico(Tabla_de_simbolos t,Read_Text r,DefaultTableModel m){
 		tbs=t;
 		arch = r;
+		m.addColumn("Linea");
+		m.addColumn("Error");
 		model = m;
 		CrearMatriz();
 	}
@@ -342,8 +344,7 @@ public class Analizador_Lexico {
 	}
 	
 	public void addError(Integer l, String s){
-		Object[] obj = {l,s};
-		this.model.addRow(obj);
+		this.model.addRow(new Object[]{l, s});
 	}
 	
 	public Simbolo getToken() {
@@ -372,5 +373,9 @@ public class Analizador_Lexico {
 		if (arch.eOF() && (!s[0].isConstructed()))
 			return new Simbolo("EndOfFile", "$");
 		return s[0];
+	}
+	
+	public DefaultTableModel getErroresLexico(){
+		return model;
 	}
 }
