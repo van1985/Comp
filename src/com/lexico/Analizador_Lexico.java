@@ -1,5 +1,6 @@
 package com.lexico;
 
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
 import com.lexico.procesos.Proceso;
@@ -35,13 +36,15 @@ public class Analizador_Lexico {
 	private int estadoActual, entrada;
 	private String a;
 	private boolean devolver;
+	private JTextArea informationModel;
 	
-	public Analizador_Lexico(Tabla_de_simbolos t,Read_Text r,DefaultTableModel m){
+	public Analizador_Lexico(Tabla_de_simbolos t,Read_Text r,DefaultTableModel m, JTextArea me){
 		tbs=t;
 		arch = r;
 		m.addColumn("Linea");
 		m.addColumn("Error");
 		model = m;
+		informationModel= me;
 		CrearMatriz();
 	}
 	
@@ -345,6 +348,10 @@ public class Analizador_Lexico {
 	
 	public void addError(Integer l, String s){
 		this.model.addRow(new Object[]{l, s});
+	}
+	
+	public void addInformation(String s){
+		this.informationModel.setText( this.informationModel.getText() + s);
 	}
 	
 	public Simbolo getToken() {

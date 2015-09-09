@@ -21,7 +21,7 @@ public class Proceso11 extends Proceso{
 	public boolean ejecutar(Simbolo[] s, char c) {
 		s[0].setLexema("=");
 		super.guardar(s, "Asignacion");
-		return false;
+		return true;
 	}
 
 }

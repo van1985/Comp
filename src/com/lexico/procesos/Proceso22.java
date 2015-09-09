@@ -12,7 +12,8 @@ public class Proceso22 extends Proceso{
 
 	@Override
 	public boolean ejecutar(Simbolo[] s, char c) {
-		super.guardar(s, "Cadena de caracteres");
+		s[0].setLexema(s[0].getLexema());
+		super.guardar(s, "Cadena caracteres");
 		return false;
 	}
 

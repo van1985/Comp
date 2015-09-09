@@ -21,6 +21,7 @@ public abstract class Proceso {
 			s[0].setToken(token);
 			anLex.getTabladeSimbolos().add(s[0].getLexema(),s[0]);
 		}
+		anLex.addInformation("[Lexico] "+s[0].getToken()+" "+s[0].getLexema()+" \n");
 		s[0].incRef();
 	}
 }

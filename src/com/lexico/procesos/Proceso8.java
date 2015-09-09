@@ -17,7 +17,7 @@ public class Proceso8 extends Proceso{
 	}
 	@Override
 	public boolean ejecutar(Simbolo[] s, char c) {
-		s[0].setToken("Comienzo de comentario en la linea " + anLex.getLinea());
+		//s[0].setToken("Comienzo de comentario en la linea " + anLex.getLinea());
 		return false;
 	}
 

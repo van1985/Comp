@@ -75,20 +75,17 @@ asignacion: ID OP_ASIG exp_aritmetica ';'
 
 /*_IMPRIMIR_______________________________________________________________________________________________________________________________________*/
 
-imprimir: PRINT cartel
+imprimir: PRINT cartel ';'
 		 ;
 
 /*_CARTEL_______________________________________________________________________________________________________________________________________*/
 
-cartel: '(' CHAIN ')' |
-		'(' DOUBLE ')' |
-		'(' ID ')'
+cartel: '(' CHAIN ')'
 		;
 
 /*_EXP_ARITMETICA_______________________________________________________________________________________________________________________________________*/
      
-exp_aritmetica: '(' exp_aritmetica ')' |
-				exp_aritmetica '+' term_aritmetica |
+exp_aritmetica: exp_aritmetica '+' term_aritmetica |
 				exp_aritmetica '-' term_aritmetica |
 				term_aritmetica
 		;
@@ -141,7 +138,7 @@ cuerpo_if: cond THEN cuerpo |
 
 /*_ITER_LOOP_______________________________________________________________________________________________________________________________________*/
 
-iter_loop: LOOP cuerpo UNTIL '(' cond ')'
+iter_loop: LOOP cuerpo UNTIL cond
 		;
 
 

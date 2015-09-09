@@ -289,7 +289,7 @@ public class View extends JFrame{
 					JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			pScroll.setBorder(BorderFactory.createTitledBorder(null,
-					"Token y Lexéma", TitledBorder.DEFAULT_JUSTIFICATION,
+					"Informacion", TitledBorder.DEFAULT_JUSTIFICATION,
 					TitledBorder.DEFAULT_POSITION, new Font("Dialog",
 							Font.BOLD, 12), new Color(51, 51, 51)));
 
@@ -454,7 +454,7 @@ public class View extends JFrame{
 		lineNumArea = new JTextArea();
 		model = new DefaultTableModel();
 		modelerror = new DefaultTableModel();
-		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(editPane.getText()), modelerror);
+		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(editPane.getText()), modelerror, jTextArea);
 		Parser parser = new Parser(al,model,true);
 		parser.run();
 
@@ -472,6 +472,9 @@ public class View extends JFrame{
 			Vector error = (Vector) data.get(i);
 			ErroresModel.addRow(new Object[]{error.get(0), error.get(1)});
 		}
+		
+		//jTextArea.setText("leandro \n");
+		//jTextArea.setText( jTextArea.getText() + "leandro \n");
 		
 		
 	}

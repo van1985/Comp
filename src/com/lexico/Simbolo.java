@@ -55,8 +55,12 @@ public class Simbolo implements ParserTokens{
 			return ELSE;
 		if (s.equals("loop"))
 			return LOOP;
+		if (s.equals("until"))
+			return UNTIL;
 		if (s.equals("print"))
 			return PRINT;
+		if (s.equals("then"))
+			return THEN;
 		if (s.equals("int"))
 			return INT;
 		if (s.equals("double"))
@@ -79,6 +83,12 @@ public class Simbolo implements ParserTokens{
 			return OP_NE;
 		if (s.equals(".."))
 			return SEP_LIM;
+		if ( s.equals("begin"))
+			return BEGIN;
+		if ( s.equals("end"))
+			return END;
+		if ( s.equals("global"))
+			return GLOBAL;
 		if (s.equals("EndOfFile"))
 			return 0;
 		return ((int)s.charAt(0));
