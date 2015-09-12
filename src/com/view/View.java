@@ -302,6 +302,8 @@ public class View extends JFrame{
 		if (pScrollErrores == null) {
 			ErroresModel.addColumn("Linea");
 			ErroresModel.addColumn("Error");
+			
+			
 			table_errores = new JTable(ErroresModel);
 			pScrollErrores = new JScrollPane(table_errores,
 					JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -455,7 +457,7 @@ public class View extends JFrame{
 		model = new DefaultTableModel();
 		modelerror = new DefaultTableModel();
 		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(editPane.getText()), modelerror, jTextArea);
-		Parser parser = new Parser(al,model,true);
+		Parser parser = new Parser(al,modelerror,true,jTextArea);
 		parser.run();
 
 		//Cargar Tabla de Simbolos
@@ -465,7 +467,7 @@ public class View extends JFrame{
 		    TablaSimbolosModel.addRow(new Object[]{simbolo.getToken(), simbolo.getLexema()});
 		}
 		
-		//Print Errores Lexicos
+		//Print Errores Lexicos / Sintacticos
 		Vector data = al.getErroresLexico().getDataVector();
 		for (int i = 0; i < data.size(); i++)
 		{
@@ -473,8 +475,6 @@ public class View extends JFrame{
 			ErroresModel.addRow(new Object[]{error.get(0), error.get(1)});
 		}
 		
-		//jTextArea.setText("leandro \n");
-		//jTextArea.setText( jTextArea.getText() + "leandro \n");
 		
 		
 	}

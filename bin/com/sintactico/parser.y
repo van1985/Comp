@@ -14,8 +14,8 @@ import java.util.*;
 /*_PROGRAMA_______________________________________________________________________________________________________________________________________*/
 
 programa: declaraciones bloque |
-  		  declaraciones |
-  		  bloque
+		  declaraciones { aserror("Faltan sentencias ejecutables"); } |
+		  bloque { aserror("Faltan sentencias de declaracion"); }
 	;
 
 /*_SECCION DECLARACION_______________________________________________________________________________________________________________________________________*/
@@ -26,61 +26,73 @@ declaraciones: declaraciones declaracion
 
 /*_DECLARACION_______________________________________________________________________________________________________________________________________*/
 
-declaracion: INT identificadores
-    | GLOBAL identificadores
+declaracion: INT identificadores {yyout("[Sintactico] Declaracion identificadores INT");}
+    | GLOBAL identificadores {yyout("[Sintactico] Declaracion identificadores GLOBAL");}
     ;
 
 /*_IDENTIFICADORES_______________________________________________________________________________________________________________________________________*/
 
 identificadores: ID ',' identificadores 
 	| ID ';'
+	| ID { aserror("Falta ;"); }
 	;
 	
 /*_BLOQUE_______________________________________________________________________________________________________________________________________*/
 
 bloque: sent_tipos bloque |
 		sent_tipos |
+		ambitos bloque |
 		ambitos
 		;
 
 /*_SENT_TIPOS_______________________________________________________________________________________________________________________________________*/
 
 sent_tipos: sent_simple |
-			sent_estruct
+			sent_estruct 
 		;
 
 /*_AMBITOS_______________________________________________________________________________________________________________________________________*/
 
-ambitos: '{' bloque '}' |
-		 '{' declaraciones bloque '}'
+ambitos: '{' bloque '}' {yyout("[Sintactico] Declaracion ambito - sent ejecutables");} |
+		 '{' declaraciones bloque '}' {yyout("[Sintactico] Declaracion ambito - sent decl+ejecutables");}
 		 ;
 
 /*_SENT_SIMPLE_______________________________________________________________________________________________________________________________________*/
 
-sent_simple: asignacion |
-			 imprimir
+sent_simple: asignacion ';' {yyout("[Sintactico] Asignacion");} 
+			|imprimir 
+			|ID { aserror(" Declaracion/Asignacion invalida");}
 		 ;
 
 /*_SENT_ESTRUCT_______________________________________________________________________________________________________________________________________*/
 
 sent_estruct: iter_loop |
-			  sent_sel
+			  sent_sel  
 		 ;
 
 /*_ASIGNACION_______________________________________________________________________________________________________________________________________*/
 
-asignacion: ID OP_ASIG exp_aritmetica ';' 
+asignacion: ID OP_ASIG cuerpo_asignacion  |
+			ID OP_ASIG {aserror("Asignacion Invalida, Falta ID/CONST");}
 		 ;
+
+cuerpo_asignacion: exp_aritmetica
+		;
 
 
 /*_IMPRIMIR_______________________________________________________________________________________________________________________________________*/
 
-imprimir: PRINT cartel ';'
+imprimir: PRINT cartel  ';' |
+		  PRINT cartel { aserror("Falta fin de la sentencia ;");} |
+		  PRINT ';' {aserror("Falta contenido a imprimir");}
 		 ;
 
 /*_CARTEL_______________________________________________________________________________________________________________________________________*/
 
-cartel: '(' CHAIN ')'
+cartel: '(' CHAIN ')' {yyout("[Sintactico] Print cadena de caracteres");} |
+ 		'(' CHAIN  { aserror("Falta el ) del print"); } |
+ 		'(' ')' { aserror("Falta el contenido a imprimir"); } |
+ 		CHAIN ')' { aserror("Falta el )"); }
 		;
 
 /*_EXP_ARITMETICA_______________________________________________________________________________________________________________________________________*/
@@ -108,7 +120,11 @@ factor: ID |
 /*_COND_______________________________________________________________________________________________________________________________________*/
 
 cond: '(' exp_aritmetica comparadores exp_aritmetica ')'
-		;
+		 | '(' exp_aritmetica comparadores exp_aritmetica { aserror("Falta Cerrar Parentesis"); }
+		 | exp_aritmetica comparadores exp_aritmetica ')' { aserror("Falta Abrir Parentesis"); }
+		 | exp_aritmetica comparadores exp_aritmetica { aserror("Faltan Parentesis"); }
+		 | '(' exp_aritmetica '=' exp_aritmetica ')' { aserror("No es posible Asignacion"); }
+		 ;
 
 /*_COMPARADORES_______________________________________________________________________________________________________________________________________*/
 
@@ -132,13 +148,13 @@ sent_sel: IF cuerpo_if
 		
 /*_CUERPO_IF_______________________________________________________________________________________________________________________________________*/
 
-cuerpo_if: cond THEN cuerpo |
-		   cond THEN cuerpo ELSE cuerpo
+cuerpo_if: cond THEN cuerpo  {yyout("[Sintactico] Sentencia IF Simple");} |
+		   cond THEN cuerpo ELSE cuerpo {yyout("[Sintactico] Sentencia IF Compuesta");}
 		;
 
 /*_ITER_LOOP_______________________________________________________________________________________________________________________________________*/
 
-iter_loop: LOOP cuerpo UNTIL cond
+iter_loop: LOOP cuerpo UNTIL cond {yyout("[Sintactico] Sentencia Loop");}
 		;
 
 
@@ -149,13 +165,13 @@ private Stack<Integer> pila;
 private Stack<Integer> estados;
 private Simbolo auxFor; //variable iteracion for
 private String sent; //sentido de variacion del for (+/-)
+private JTextArea modelInformation;
 
-public Parser(Analizador_Lexico al,DefaultTableModel me,boolean debugMe){
+public Parser(Analizador_Lexico al,DefaultTableModel me,boolean debugMe,JTextArea mInfo){
 	this.al = al;
 	this.modelError = me;
 	yydebug=debugMe;
-	this.pila = new Stack<Integer>();
-	this.estados = new Stack<Integer>();
+	this.modelInformation = mInfo;
 }
 
 public int yylex(){
@@ -170,11 +186,11 @@ public int yylex(){
 
 void aserror(String s){
 	if (s == "syntax error"){
-		Object[] obj = {"[SINTACTICO]",this.al.getLinea(),"Error de sintaxis"};
+		Object[] obj = {this.al.getLinea(),"[SINTACTICO] Error de sintaxis"};
 		this.modelError.addRow(obj);
 	}
 	else{
-		Object[] obj = {"[SINTACTICO]",this.al.getLinea(),s};		
+		Object[] obj = {this.al.getLinea(),"[SINTACTICO] "+s};		
 		this.modelError.addRow(obj);
 	}
 }
@@ -183,16 +199,8 @@ void yyerror(String s){
 }
 
 void yyout(String s){
+	this.modelInformation.setText( this.modelInformation.getText() + s);
 }
 public String toString() {
-	/*
-	Enumeration<Terceto> e = this.tercetos.elements();
-	String str = new String();
-	while (e.hasMoreElements()){
-		Terceto t = e.nextElement();
-		str += t.getNumero()+"-  "+t.toString();
-	}
-	return str;
-	*/
 	return "";
 }

@@ -313,7 +313,7 @@ public class Analizador_Lexico {
 			return 4;
 		if (c=='i')
 			return 5;
-		if (((c == '+') || (c == ',') || (c == ';') || (c == '(') || (c == ')') || (c == '*') || (c == '-')) )
+		if (((c == '+') || (c == ',') || (c == ';') || (c == '(') || (c == ')') || (c == '*') || (c == '-') || (c == '{') || (c == '}')) )
 			return 6;
 		if (c == '/')
 			return 7;
@@ -347,6 +347,7 @@ public class Analizador_Lexico {
 	}
 	
 	public void addError(Integer l, String s){
+		s = "[LEXICO] "+s;
 		this.model.addRow(new Object[]{l, s});
 	}
 	
