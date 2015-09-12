@@ -59,7 +59,7 @@ ambitos: '{' bloque '}' {yyout("[Sintactico] Declaracion ambito - sent ejecutabl
 
 /*_SENT_SIMPLE_______________________________________________________________________________________________________________________________________*/
 
-sent_simple: asignacion ';' {yyout("[Sintactico] Asignacion");} 
+sent_simple: asignacion 
 			|imprimir 
 			|ID { aserror(" Declaracion/Asignacion invalida");}
 		 ;
@@ -72,11 +72,12 @@ sent_estruct: iter_loop |
 
 /*_ASIGNACION_______________________________________________________________________________________________________________________________________*/
 
-asignacion: ID OP_ASIG cuerpo_asignacion  |
-			ID OP_ASIG {aserror("Asignacion Invalida, Falta ID/CONST");}
+asignacion: ID OP_ASIG cuerpo_asignacion ';' {yyout("[Sintactico] Asignacion");} |
+			ID OP_ASIG cuerpo_asignacion {aserror("Falta el ;");}
 		 ;
 
 cuerpo_asignacion: exp_aritmetica
+			| error  {aserror("Falta el lado derecho de la asignacion");}
 		;
 
 
