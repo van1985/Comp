@@ -19,6 +19,7 @@ public class Proceso4 extends Proceso{
 	
 	@Override
 	public boolean ejecutar(Simbolo[] s, char c) {
+		
 		try{
 			int val = Integer.valueOf(s[0].getLexema());
 			int min = (int) Math.pow(-2,15);

@@ -21,7 +21,7 @@ public class Proceso6 extends Proceso{
 			int val = Integer.valueOf(s[0].getLexema());
 			int max = (int)Math.pow(2,16)-1;
 			if ((val>=0)&&(val<=max)){
-				super.guardar(s, "Constante Entera del tipo _ui");
+				super.guardar(s, "CTE_UI");
 			}
 			else{
 				this.anLex.addError(this.anLex.getLinea(), "Constante entera fuera de rango: "+s[0].getLexema());

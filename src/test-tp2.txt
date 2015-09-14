@@ -1,9 +1,15 @@
 // declaracion //
 int z,p;
 global g;
+unsigned int m,v;
+
+// identificador truncado //
+int qqqqqqqqqqqqqqqq;
 
 // asignacion //
 z=123_i;
+p=-211_i;
+m=150_ui;
 
 // sentencia loop //
 loop

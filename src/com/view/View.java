@@ -469,6 +469,12 @@ public class View extends JFrame{
 		    	ErroresModel.removeRow(i);
 		    }
 		}
+		
+		if (InformacionModel.getRowCount() > 0) {
+		    for (int i = InformacionModel.getRowCount() - 1; i > -1; i--) {
+		    	InformacionModel.removeRow(i);
+		    }
+		}
 	};
 	
 	static String path="";

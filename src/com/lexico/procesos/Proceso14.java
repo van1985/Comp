@@ -21,7 +21,7 @@ public class Proceso14 extends Proceso{
 	public boolean ejecutar(Simbolo[] s, char c) {
 		s[0].setLexema(">=");
 		super.guardar(s, "Operador Relacional");
-		return false;
+		return true;
 	}
 
 }

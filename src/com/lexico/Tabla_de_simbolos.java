@@ -1,6 +1,8 @@
 package com.lexico;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -12,6 +14,8 @@ public class Tabla_de_simbolos {
 	public Tabla_de_simbolos(DefaultTableModel t){
 		this.tabladesimbolos=new Hashtable<String,Simbolo>();
 		this.model = t;
+		model.addColumn("Token");
+		model.addColumn("Lexema");
 		Simbolo aux = new Simbolo("Palabra Reservada","if");
 		add("if", aux);
 		
@@ -29,6 +33,9 @@ public class Tabla_de_simbolos {
 		
 		aux = new Simbolo("Palabra Reservada","int");
 		add("int", aux);
+		
+		aux = new Simbolo("Palabra Reservada","unsigned");
+		add("unsigned", aux);
 
 		aux = new Simbolo("Palabra Reservada","begin");
 		add("begin", aux);
@@ -66,6 +73,19 @@ public class Tabla_de_simbolos {
 	
 	public Hashtable<String, Simbolo> getTablaDeSimbolos(){
 		return tabladesimbolos;
+	}
+	
+	public void removeSimbolo(String l){
+		this.tabladesimbolos.remove(l);
+		Enumeration<Vector> e = this.model.getDataVector().elements();
+		boolean find = false;
+		while ((!find) && (e.hasMoreElements())){
+			Vector obj = e.nextElement();
+			if(l.equals(obj.elementAt(1))){
+				this.model.getDataVector().remove(obj);
+				find = true;
+			}
+		}
 	}
 	
 }

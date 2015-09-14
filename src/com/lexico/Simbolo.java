@@ -63,10 +63,10 @@ public class Simbolo implements ParserTokens{
 			return THEN;
 		if (s.equals("int"))
 			return INT;
-		if (s.equals("double"))
-			return DOUBLE;
-		if (s.equals("Constante Doble"))
-			return CTED;
+		if (s.equals("unsigned"))
+			return UNSIGNED;
+		if (s.equals("CTE_UI"))
+			return CTEUI;
 		if (s.equals("CTE_I"))
 			return CTEI;
 		if (s.equals("Cadena caracteres"))

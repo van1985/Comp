@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.*;
 %}
 
-%token INT DOUBLE ID GLOBAL CTEI IF ELSE THEN OP_LE OP_GE OP_NE CTED LOOP UNTIL PRINT CHAIN OP_ASIG SEP_LIM BEGIN END
+%token INT UNSIGNED ID GLOBAL CTEI IF ELSE THEN OP_LE OP_GE OP_NE CTEUI LOOP UNTIL PRINT CHAIN OP_ASIG SEP_LIM BEGIN END
 %right '=' OP_ASIG
 
 %%
@@ -28,6 +28,7 @@ declaraciones: declaraciones declaracion
 
 declaracion: INT identificadores {yyout("[Sintactico] Declaracion identificadores INT");}
     | GLOBAL identificadores {yyout("[Sintactico] Declaracion identificadores GLOBAL");}
+    | UNSIGNED INT identificadores {yyout("[Sintactico] Declaracion identificadores UNSIGNED INT");}
     ;
 
 /*_IDENTIFICADORES_______________________________________________________________________________________________________________________________________*/
@@ -115,7 +116,28 @@ term_aritmetica: term_aritmetica '*' '(' exp_aritmetica ')' |
 /*_FACTOR_______________________________________________________________________________________________________________________________________*/
 
 factor: ID |
-		CTEI
+		CTEI |
+		'-'CTEI 
+		{
+			Simbolo s = (Simbolo)$2.simbolo;
+			if (this.al.getTabladeSimbolos().getSimbolo(s.getLexema()).getRef() == 1){
+				this.al.getTabladeSimbolos().removeSimbolo("-");
+				this.al.getTabladeSimbolos().removeSimbolo(s.getLexema());
+				s.setLexema("-"+s.getLexema());
+				this.al.getTabladeSimbolos().add(s.getLexema(),s);
+			}
+			else{
+				if (!this.al.getTabladeSimbolos().existeSimbolo("-"+s.getLexema())){
+					Simbolo simb = new Simbolo(s.getToken(),"-"+s.getLexema());
+					simb.incRef();
+					this.al.getTabladeSimbolos().add(simb.getLexema(),simb);
+					
+				}
+			}
+		}
+		|
+		CTEUI |
+		'-'CTEUI {aserror("No se pueden crear constantes sin signo negativas");}
 		;
 
 /*_COND_______________________________________________________________________________________________________________________________________*/
@@ -162,10 +184,6 @@ iter_loop: LOOP cuerpo UNTIL cond {yyout("[Sintactico] Sentencia Loop");}
 %%
 private Analizador_Lexico al;
 private DefaultTableModel modelError;
-private Stack<Integer> pila;
-private Stack<Integer> estados;
-private Simbolo auxFor; //variable iteracion for
-private String sent; //sentido de variacion del for (+/-)
 private DefaultTableModel modelInformation;
 
 public Parser(Analizador_Lexico al,DefaultTableModel me,boolean debugMe,DefaultTableModel mInfo){
