@@ -429,9 +429,9 @@ private Stack<Integer> pila;
 private Stack<Integer> estados;
 private Simbolo auxFor; //variable iteracion for
 private String sent; //sentido de variacion del for (+/-)
-private JTextArea modelInformation;
+private DefaultTableModel modelInformation;
 
-public Parser(Analizador_Lexico al,DefaultTableModel me,boolean debugMe,JTextArea mInfo){
+public Parser(Analizador_Lexico al,DefaultTableModel me,boolean debugMe,DefaultTableModel mInfo){
 	this.al = al;
 	this.modelError = me;
 	yydebug=debugMe;
@@ -463,12 +463,13 @@ void yyerror(String s){
 }
 
 void yyout(String s){
-	this.modelInformation.setText( this.modelInformation.getText() + s);
+	this.modelInformation.addRow(new Object[]{"[SINTACTICO]",al.getLinea(), s});
+	//this.modelInformation.setText( this.modelInformation.getText() + s);
 }
 public String toString() {
 	return "";
 }
-//#line 400 "Parser.java"
+//#line 401 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -718,7 +719,7 @@ case 60:
 //#line 158 "parser.y"
 {yyout("[Sintactico] Sentencia Loop");}
 break;
-//#line 645 "Parser.java"
+//#line 646 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####

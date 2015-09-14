@@ -12,7 +12,9 @@ import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Vector;
@@ -37,6 +39,7 @@ import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import com.lexico.Analizador_Lexico;
 import com.lexico.Read_Text;
@@ -90,6 +93,7 @@ public class View extends JFrame{
 	boolean isSaved = false;
 	private JTable table_symbol;
 	private JTable table_errores;
+	private JTable table_info;
 	
 	private JPanel jOutContentPane;
 	private JScrollPane pScroll;
@@ -214,6 +218,7 @@ public class View extends JFrame{
 			try {
 							
 				editPane.setText("");
+				lineNumArea = new JTextArea();
 				lineNumArea.setText("");
 				loadEditPane(fileName);				
 				
@@ -228,6 +233,10 @@ public class View extends JFrame{
 	
 	private void loadEditPane(String path) {
 		try {
+			FileInputStream fis = new FileInputStream(path);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader archivo = new BufferedReader(isr);
+			
 			String linea = "";			
 			int line = 1;
 			boolean exit = false;
@@ -236,7 +245,7 @@ public class View extends JFrame{
 				if (linea == null)
 					exit = true;
 				else {
-					editPane.append("\t" + linea + "\n");
+					editPane.append( linea + "\n");
 					lineNumArea.append(String.valueOf(line) + "\n");					
 					line++;
 				}
@@ -283,9 +292,21 @@ public class View extends JFrame{
 		return pScrollTabla;
 	}
 
+	DefaultTableModel InformacionModel = new DefaultTableModel();
 	private JScrollPane getJScrollPane() {
 		if (pScroll == null) {
-			pScroll = new JScrollPane(getJTextArea(),
+			InformacionModel.addColumn("Componente");
+			InformacionModel.addColumn("Linea");
+			InformacionModel.addColumn("Descripcion");
+			
+			table_info = new JTable(InformacionModel);
+			
+			TableColumnModel columnModel = table_info.getColumnModel();
+			columnModel.getColumn(0).setMaxWidth(100);
+			columnModel.getColumn(1).setMaxWidth(50);
+			columnModel.getColumn(2).setMaxWidth(300);
+			
+			pScroll = new JScrollPane(table_info,
 					JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 					JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			pScroll.setBorder(BorderFactory.createTitledBorder(null,
@@ -305,6 +326,11 @@ public class View extends JFrame{
 			
 			
 			table_errores = new JTable(ErroresModel);
+			
+			TableColumnModel columnModel = table_errores.getColumnModel();
+			columnModel.getColumn(0).setMaxWidth(50);
+			columnModel.getColumn(1).setMaxWidth(400);
+			
 			pScrollErrores = new JScrollPane(table_errores,
 					JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 					JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -453,11 +479,12 @@ public class View extends JFrame{
 	public void Analizar(){
 		
 		cleanAllPane();
-		lineNumArea = new JTextArea();
+		if (lineNumArea == null)
+			lineNumArea = new JTextArea();
 		model = new DefaultTableModel();
 		modelerror = new DefaultTableModel();
-		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(editPane.getText()), modelerror, jTextArea);
-		Parser parser = new Parser(al,modelerror,true,jTextArea);
+		Analizador_Lexico al = new Analizador_Lexico(new Tabla_de_simbolos(model), new Read_Text(editPane.getText()), modelerror, InformacionModel);
+		Parser parser = new Parser(al,modelerror,true,InformacionModel);
 		parser.run();
 
 		//Cargar Tabla de Simbolos

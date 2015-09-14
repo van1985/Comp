@@ -1,5 +1,6 @@
 package com.lexico;
 
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 
@@ -36,9 +37,9 @@ public class Analizador_Lexico {
 	private int estadoActual, entrada;
 	private String a;
 	private boolean devolver;
-	private JTextArea informationModel;
+	private DefaultTableModel informationModel;
 	
-	public Analizador_Lexico(Tabla_de_simbolos t,Read_Text r,DefaultTableModel m, JTextArea me){
+	public Analizador_Lexico(Tabla_de_simbolos t,Read_Text r,DefaultTableModel m, DefaultTableModel me){
 		tbs=t;
 		arch = r;
 		m.addColumn("Linea");
@@ -352,7 +353,7 @@ public class Analizador_Lexico {
 	}
 	
 	public void addInformation(String s){
-		this.informationModel.setText( this.informationModel.getText() + s);
+		this.informationModel.addRow(new Object[]{"[LEXICO]",this.getLinea(), s});
 	}
 	
 	public Simbolo getToken() {

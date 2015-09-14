@@ -1,1 +1,61 @@
-int variable;
+// declaracion //
+int z,p;
+global g;
+
+// asignacion //
+z=123_i;
+
+// sentencia loop //
+loop
+begin
+z=z+10_i;
+end
+until ( z > 200_i )
+
+//sentencia if simple //
+if (z>200_i) then
+begin
+p=4_i;
+end
+
+// sentencia if compuesto //
+if (z>200_i) then
+begin
+p=p * 9_i;
+end
+else
+begin
+p = p / 2_i;
+end
+
+p=p - 1_i;
+
+// sentencia print //
+print('compiladores tp2');
+
+// ejemplo 
+de 
+comentarios 
+multilinea 
+//
+
+
+// ambito con declaracion + sent ejecutable //
+{
+  int z;
+  z=123_i;
+}
+
+// ambito con sent ejecutable //
+{
+  z= z + 450_i;
+}
+
+// ambitos anidados //
+{
+	{
+		int p;
+		p=p * 123_i;
+	}
+}
+
