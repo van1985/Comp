@@ -106,9 +106,7 @@ exp_aritmetica: exp_aritmetica '+' term_aritmetica |
 
 /*_TERM_ARITMETICA_______________________________________________________________________________________________________________________________________*/
 
-term_aritmetica: term_aritmetica '*' '(' exp_aritmetica ')' |
-				 term_aritmetica '/' '(' exp_aritmetica ')' |
-				 term_aritmetica '*' factor |
+term_aritmetica: term_aritmetica '*' factor |
 				 term_aritmetica '/' factor |
 				 factor
 		;
@@ -137,7 +135,7 @@ factor: ID |
 		}
 		|
 		CTEUI |
-		'-'CTEUI {aserror("No se pueden crear constantes sin signo negativas");}
+		'-'CTEUI {aserror("No se pueden crear constantes _ui con signo negativas");}
 		;
 
 /*_COND_______________________________________________________________________________________________________________________________________*/
