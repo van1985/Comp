@@ -101,8 +101,8 @@ public class Analizador_Lexico {
 		M.setElemento(1, 1, new Par(1,p1));
 		M.setElemento(1, 2, new Par(1,p1));
 		M.setElemento(1, 3, new Par(0,p2));
-		M.setElemento(1, 4, new Par(0,p1));
-		M.setElemento(1, 5, new Par(0,p1));
+		M.setElemento(1, 4, new Par(1,p1));
+		M.setElemento(1, 5, new Par(1,p1));
 		M.setElemento(1, 6, new Par(0,p2));
 		M.setElemento(1, 7, new Par(0,p2));
 		M.setElemento(1, 8, new Par(0,p2));
@@ -118,8 +118,8 @@ public class Analizador_Lexico {
 		M.setElemento(2, 1, new Par(0,p21));
 		M.setElemento(2, 2, new Par(0,p21));
 		M.setElemento(2, 3, new Par(0,p21));
-		M.setElemento(2, 4, new Par(0,p1));
-		M.setElemento(2, 5, new Par(0,p1));
+		M.setElemento(2, 4, new Par(1,p1));
+		M.setElemento(2, 5, new Par(1,p1));
 		M.setElemento(2, 6, new Par(0,p21));
 		M.setElemento(2, 7, new Par(0,p21));
 		M.setElemento(2, 8, new Par(0,p21));
