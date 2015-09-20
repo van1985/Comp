@@ -440,7 +440,10 @@ public class View extends JFrame{
 		toolBar = new JToolBar();
 		openButton = new JButton();
 		openButton.setToolTipText("Abrir Archivo");
-		openButton.setIcon(new ImageIcon(getClass().getResource("../resources/folder-open.png")));
+		openButton.setIcon(new ImageIcon(
+				//getClass().getResource("../resources/folder-open.png")
+				getClass().getResource("folder-open.png")
+				));
 		openButton.setMargin(new Insets(0, 0, 0, 0));
 		toolBar.add(openButton);
 
@@ -449,7 +452,10 @@ public class View extends JFrame{
 
 		lexicoButton = new JButton();
 		lexicoButton.setToolTipText("Ejecutar Analizador Sintactico");
-		lexicoButton.setIcon(new ImageIcon(getClass().getResource("../resources/cog.png")));
+		lexicoButton.setIcon(new ImageIcon(
+				//getClass().getResource("../resources/cog.png")
+				getClass().getResource("cog.png")
+				));
 		lexicoButton.setMargin(new Insets(0, 0, 0, 0));
 		toolBar.add(lexicoButton);
 
