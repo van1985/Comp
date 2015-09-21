@@ -461,7 +461,7 @@ void aserror(String s){
 		this.modelError.addRow(obj);
 	}
 	else{
-		Object[] obj = {al.getLinea(),"[SINTACTICO] "+s};		
+		Object[] obj = {al.getLinea()-1,"[SINTACTICO] "+s};		
 		this.modelError.addRow(obj);
 	}
 }

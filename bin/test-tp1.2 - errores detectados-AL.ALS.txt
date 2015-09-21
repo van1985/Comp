@@ -1,3 +1,4 @@
+// errores detectados //
 int z
 int p;
 unsigned int u;

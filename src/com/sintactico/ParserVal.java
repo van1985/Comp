@@ -33,7 +33,6 @@ public String sval;
  */
 public Object obj;
 
-
 public Simbolo simbolo;
 //#############################################
 //## C O N S T R U C T O R S
