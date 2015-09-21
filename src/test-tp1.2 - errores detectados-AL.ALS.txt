@@ -1,0 +1,22 @@
+int z
+int p;
+unsigned int u;
+int hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh;
+p=123_i;
+p=456_i
+p=;
+z=123_i;
+z;
+print('leandro'
+u=-553_ui;
+
+if z > 123_i then
+begin
+z= 123_i;
+end
+
+loop
+begin
+p=123_i
+end
+until p > 124_i

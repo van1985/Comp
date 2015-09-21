@@ -35,9 +35,9 @@ declaracion: INT identificadores {yyout("[Sintactico] Declaracion identificadore
 
 identificadores: ID ',' identificadores 
 	| ID ';'
-	| ID { aserror("Falta ;"); }
+	| ID error { aserror("Falta ;"); }
 	;
-	
+
 /*_BLOQUE_______________________________________________________________________________________________________________________________________*/
 
 bloque: sent_tipos bloque |
@@ -50,7 +50,7 @@ bloque: sent_tipos bloque |
 
 sent_tipos: sent_simple |
 			sent_estruct |
-			error
+			error { aserror("Sentencia mal formada");}
 		;
 
 /*_AMBITOS_______________________________________________________________________________________________________________________________________*/
@@ -93,9 +93,9 @@ imprimir: PRINT cartel  ';' |
 /*_CARTEL_______________________________________________________________________________________________________________________________________*/
 
 cartel: '(' CHAIN ')' {yyout("[Sintactico] Print cadena de caracteres");} |
- 		'(' CHAIN  { aserror("Falta el ) del print"); } |
- 		'(' ')' { aserror("Falta el contenido a imprimir"); } |
- 		CHAIN ')' { aserror("Falta el )"); }
+ 		'(' CHAIN error { aserror("Falta el ) del print"); } |
+ 		'(' error ')' { aserror("Falta la cadena de caracteres a imprimir"); } |
+ 		error CHAIN ')' { aserror("Falta el )"); }
 		;
 
 /*_EXP_ARITMETICA_______________________________________________________________________________________________________________________________________*/
@@ -145,7 +145,6 @@ cond: '(' exp_aritmetica comparadores exp_aritmetica ')'
 		 | '(' exp_aritmetica comparadores exp_aritmetica { aserror("Falta Cerrar Parentesis"); }
 		 | exp_aritmetica comparadores exp_aritmetica ')' { aserror("Falta Abrir Parentesis"); }
 		 | exp_aritmetica comparadores exp_aritmetica { aserror("Faltan Parentesis"); }
-		 | '(' exp_aritmetica '=' exp_aritmetica ')' { aserror("No es posible Asignacion"); }
 		 ;
 
 /*_COMPARADORES_______________________________________________________________________________________________________________________________________*/
@@ -155,7 +154,8 @@ comparadores: '<' |
 			  '<=' |
 			  '>=' |
 			  '<>' |
-			  '==' 
+			  '==' |
+			  error { aserror("El operador relacional para la comparacion no es parte de la gramatica"); }
 		;
 
 /*_CUERPO_______________________________________________________________________________________________________________________________________*/
@@ -204,11 +204,11 @@ public int yylex(){
 
 void aserror(String s){
 	if (s == "syntax error"){
-		Object[] obj = {this.al.getLinea(),"[SINTACTICO] Error de sintaxis"};
+		Object[] obj = {al.getLinea(),"[SINTACTICO] Error de sintaxis"};
 		this.modelError.addRow(obj);
 	}
 	else{
-		Object[] obj = {this.al.getLinea(),"[SINTACTICO] "+s};		
+		Object[] obj = {al.getLinea(),"[SINTACTICO] "+s};		
 		this.modelError.addRow(obj);
 	}
 }
