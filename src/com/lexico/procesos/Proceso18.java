@@ -13,8 +13,8 @@ public class Proceso18 extends Proceso{
 	@Override
 	public boolean ejecutar(Simbolo[] s, char c) {
 		this.anLex.addError(this.anLex.getLinea(), "Caracter invalido: "+c+" \"");
-		s[0].setLexema("");
-		return true;
+		//s[0].setLexema("");
+		return false;
 	}
 
 	

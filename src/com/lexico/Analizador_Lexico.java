@@ -372,8 +372,10 @@ public class Analizador_Lexico {
 			}
 			else
 				devolver = false;
+			
 			if (estadoActual == 18)
-				this.arch.backChars(3);
+				this.arch.backChars(1);
+				
 			estadoActual = ((Par) M.getElemento(estadoActual,
 					entrada)).getestadoProximo().intValue();
 		}

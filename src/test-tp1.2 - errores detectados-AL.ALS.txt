@@ -21,3 +21,6 @@ begin
 p=123_i
 end
 until p > 124_i
+
+p=12_i - 1_i;
+|
